@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Vitals";
+}
+<form action="Vitals" class="form-horizontal" id="complaint" name="complaint" method="POST">
+    <div class="row ">
+        <div class="col-12">
+            <input type="hidden" id="pID" name="pID" />
+            <label class="control-label">Patient Name:</label>
+            <input type="text" class="input form-control" id="pat" name="pat" readonly="readonly" value="" />
+        </div>
+        @*<input type="text" class="input form-control" id="pat_id" name="pat_id"value=""/>*@
+       
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <label class="control-label">Body Temp:</label>
+            <input type="text" name="temp" id="temp" class="input form-control" required/>
+        </div>
+        <div class="col-6">
+            <label class="control-label">Blood Pressure:</label>
+            <input type="text" name="bpi" id="bpi" class="input form-control" required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <label class="control-label">Weight:</label>
+            <input type="text" name="weight" id="weight" class="input form-control" />
+        </div>
+        <div class="col-6">
+            <label class="control-label">Height:</label>
+            <input type="text" name="Height" id="Height" class="input form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <label class="control-label">BMI:</label>
+            <input type="text" name="bmi" id="bmi" class="input form-control" readonly="readonly"  />
+        </div>
+        <div class="col-6">
+            <label class="control-label">Pulse:</label>
+            <input type="text" name="Pulse" id="Pulse" class="input form-control" required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <label class="control-label">Chief Complaints (CC):</label>
+            <textarea class="form-control" name="cc" id="cc" cols="20" rows="5" placeholder="Enter Chief Complaints"></textarea>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" class="btn btn-success" value="Save" name="submit" />
+        </div>
+    </div>
+</form>
+

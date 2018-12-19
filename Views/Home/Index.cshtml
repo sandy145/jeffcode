@@ -1,0 +1,299 @@
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<div class="col-lg-6">
+    @*<div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <div id="piecontainer3" style=""></div>
+            @*<p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+            </p>
+
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a
+        </div>
+    </div>*@
+
+    <div class="card card-primary card-outline">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <div id="piecontainer2" style=""></div>
+            @*<p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+            </p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>*@
+        </div>
+    </div><!-- /.card -->
+</div>
+<!-- /.col-md-6 -->
+<div class="col-lg-6">
+    @*<div class="card">
+        <div class="card-header">
+            <h5 class="m-0">
+                Featured
+            </h5>
+            <div id="piecontainer4" style=""></div>
+        </div>
+        @*<div class="card-body">
+            <h6 class="card-title">Special title treatment</h6>
+
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>*@
+
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h5 class="m-0">Featured</h5>
+        </div>
+        <div class="card-body">
+            <div id="piecontainer" style=""></div>
+            @*<h6 class="card-title">Special title treatment</h6>
+
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>*@
+        </div>
+    </div>
+</div>
+<!-- /.col-md-6 -->
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+          
+            debugger;
+            $.ajax({
+                url: '@Url.Action("Index", "Home")',
+                type: "POST",
+                data: { },
+                cache: false,
+                async: true,
+                success: function (data) {
+                    debugger;
+                    var s = data.data.FirstName;
+                    var f = data.data.LastName;
+                    loadPieChart(data);
+
+
+
+
+
+                }
+            })
+           
+            
+        })
+
+        function loadPieChart(data)
+
+        {
+            debugger;
+            Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                return {
+                    radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                    ]
+                };
+            });
+
+            // Build the chart
+            $('#piecontainer').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Gender distribution'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            },
+                            connectorColor: 'silver'
+                        }
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Gender Distribution',
+                    data:
+                    [
+                       ['Males', 100],
+                    {
+                        name: 'Females',
+                        y: 200,
+                        sliced: true,
+                        selected: true
+                    }
+                    ],
+
+                }]
+            })
+
+
+            // Build the chart
+            $('#piecontainer2').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Gender distribution'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            },
+                            connectorColor: 'silver'
+                        }
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Gender Distribution',
+                    data:
+                    [
+                       ['Males', 100],
+                    {
+                        name: 'Females',
+                        y: 200,
+                        sliced: true,
+                        selected: true
+                    }
+                    ],
+
+                }]
+            })
+
+            // Build the chart
+            //$('#piecontainer3').highcharts({
+            //    chart: {
+            //        plotBackgroundColor: null,
+            //        plotBorderWidth: null,
+            //        plotShadow: false
+            //    },
+            //    title: {
+            //        text: 'Gender distribution'
+            //    },
+            //    tooltip: {
+            //        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            //    },
+            //    plotOptions: {
+            //        pie: {
+            //            allowPointSelect: true,
+            //            cursor: 'pointer',
+            //            dataLabels: {
+            //                enabled: true,
+            //                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            //                style: {
+            //                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            //                },
+            //                connectorColor: 'silver'
+            //            }
+            //        }
+            //    },
+            //    credits: {
+            //        enabled: false
+            //    },
+            //    series: [{
+            //        type: 'pie',
+            //        name: 'Gender Distribution',
+            //        data:
+            //        [
+            //           ['Males', 100],
+            //        {
+            //            name: 'Females',
+            //            y: 200,
+            //            sliced: true,
+            //            selected: true
+            //        }
+            //        ],
+
+            //    }]
+            //})
+
+            //// Build the chart
+            //$('#piecontainer4').highcharts({
+            //    chart: {
+            //        plotBackgroundColor: null,
+            //        plotBorderWidth: null,
+            //        plotShadow: false
+            //    },
+            //    title: {
+            //        text: 'Gender distribution'
+            //    },
+            //    tooltip: {
+            //        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            //    },
+            //    plotOptions: {
+            //        pie: {
+            //            allowPointSelect: true,
+            //            cursor: 'pointer',
+            //            dataLabels: {
+            //                enabled: true,
+            //                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            //                style: {
+            //                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            //                },
+            //                connectorColor: 'silver'
+            //            }
+            //        }
+            //    },
+            //    credits: {
+            //        enabled: false
+            //    },
+            //    series: [{
+            //        type: 'pie',
+            //        name: 'Gender Distribution',
+            //        data:
+            //        [
+            //           ['Males', 100],
+            //        {
+            //            name: 'Females',
+            //            y: 200,
+            //            sliced: true,
+            //            selected: true
+            //        }
+            //        ],
+
+            //    }]
+            //})
+        }
+    </script>
+
+
+}

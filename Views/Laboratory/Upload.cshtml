@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+}
+<form action="" class="form-horizontal" id="complaint" name="complaint" method="POST">
+    <div class="row">
+        <div class="col">
+            <input type="hidden" id="patient" value="" /><input type="hidden" id="presSelections" value="" />
+            <h3>Prescribed Lab Tests</h3>
+            <div style="overflow:auto; border: 1px solid #c5c5c5">
+                <table id="labList" style="width:100%" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Lab Test</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+    <div class="row">
+        <div class="col-6">
+            @*<input type="submit" class="btn btn-success" value="Save" name="submit" />*@
+            <button id="btnCompleteTest" class="btn btn-primary">Submit Results</button>
+        </div>
+    </div>
+    @*<div >
+            <input type="file" id="fileInput" multiple />
+            <input type="button" id="fileButton" value="Upload Files" /><br />
+            <img src="#" id="loadingImg" />
+        </div>*@
+</form>

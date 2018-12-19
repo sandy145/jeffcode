@@ -1,0 +1,767 @@
+﻿
+@{
+    Layout = "../Shared/_Layout.cshtml";
+
+}
+
+
+
+
+<ul class="nav nav-tabs hide" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Search</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Edit</a>
+    </li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="card">
+            <div class="card-body">
+                <div class="span5"><button class="btn btn-success fas fa-folder" data-toggle='modal' data-target='#addPatientModal'>Open New Folder</button></div>
+                <div class="span2"><strong>Search Results</strong></div>
+                <div class="spaan2 offset9">
+
+                </div>
+                <div class="span12">
+                    <table style="width:100%" id="patSearch" class="table">
+                        <thead>
+                            <tr>
+                                <th> #</th>
+                                <th>Hospital #</th>
+                                <th>Patient Full Name</th>
+                                <th>Gender</th>
+                                <th>Date Of Birth</th>
+                                <th>Mobile</th>
+                                <th>Occupation</th>
+                                <th width="10%">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="appointmentModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Book Appointment with Doctor</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                @Html.Partial("~/Views/Front/AssignDoctor.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cardModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Card Section</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body" id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button id="cmd" onclick="doPDF();">PRINT</button>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label>Full Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Hospital Number</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label id="fullnametxt"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label id="hosnumbertxt"></label>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="vitalsModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Vitals Section</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                @Html.Partial("~/Views/Front/Vitals.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addPatientModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Patient</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                @Html.Partial("~/Views/Front/AddPatient.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editPatientModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Patient</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-personal-tab" data-toggle="pill" href="#pills-personal" role="tab" aria-controls="pills-personal" aria-selected="true">Patient Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Vitals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-history-tab" data-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="false">Appointments</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
+
+                        @Html.Partial("~/Views/Front/AddPatient.cshtml")
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        @Html.Partial("~/Views/Front/Vitals.cshtml")
+                    </div>
+                    <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
+                        @Html.Partial("~/Views/Front/AssignDoctor.cshtml")
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="dialog-confirm" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Patient</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <p>Do you want to proceed?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            //Validations
+            $('#mobile').on('input', function (event) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            $('#other').on('input', function (event) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            $('#kin_num').on('input', function (event) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
+            //Get Doctor Information for AssignDoctor PopUp
+            var userData = @Html.Raw(ViewBag.UserList);
+            //Bind to Select Doctor
+            $('#doc_id').append('<option value="0">-----Select Doctor-----</option>');
+            for (var i = 0; i < userData.length; i++) {
+
+                $('#doc_id').append('<option value='+userData[i].UserId+'>' + userData[i].FirstName +'-'+ userData[i].Practice+ '</option>');
+            }
+
+
+            $('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+            });
+
+            var patientData = @Html.Raw(ViewBag.PatientList);
+            var patientTable= $('#patSearch').DataTable( {
+                data: patientData,
+                rowId: 'PatientId',
+                dom: 'Bfrtip',
+                columns: [
+                    {
+                        data: "PatientId",
+                        visible:false
+                    },
+                    { data: "PatientNumber"},
+                    { data: "FirstName"},
+                    { data: "Gender" },
+                    { data: "DOB" },
+                    { data: "Mobile" },
+                    { data: "Occupation" },
+                    {
+                        width:250,
+                        data: null,
+                        defaultContent: "<div class='btn-group'>"+
+                                          "<button type='button' class='btn btn-info btnSel' data-toggle='modal' data-target='#vitalsModal'>Vitals</button>"+
+                                          "<button type='button' class='btn btn-info btnSel' data-toggle='modal' data-target='#appointmentModal'>Book</button>"+
+                                          "<button type='button' class='btn btn-info btnEdit' title='Edit'><i class='fa fa-edit'></i></button><button type='button' class='btn btn-info btnDel' title='Delete'><i class='fa fa-close'></i></button>"+
+                                        "</div>"
+                        //<button class='btn btn-warning btnSel fa fa-heartbeat' data-toggle='modal' data-target='#vitalsModal'>Vitals</button> <button class='btn btn-primary btnSel fa fa-calendar' data-toggle='modal' data-target='#appointmentModal'>Book</button><button class='btn btn-danger fa fa-edit' title='Edit' data-toggle='modal' data-target='#addPatientModal'>Edit</button>"
+                    }
+                ],
+
+            } );
+
+
+            var name="";
+            var hosNumber="";
+            var patientId;
+            var patientTable = $('#patSearch').DataTable();
+            //$('#patSearch').on( 'click', 'tr', function () {
+            //    debugger;
+            //    var rowid = patientTable.row( this).id();
+            //    $("#pID").val(rowid);
+            //    $("#pat_id").val(rowid);
+
+
+            //    //if(selectedPrescriptionValues=="")
+            //    //    selectedPrescriptionValues=rowid;
+            //    //else
+            //    //    selectedPrescriptionValues=selectedPrescriptionValues+','+rowid;
+
+            //    //$('#presSelections').val('')
+            //    //$('#presSelections').val(selectedPrescriptionValues)
+
+            //} );
+            var patientIdGlobal="";
+            var resultData;
+            //Load  Patient Details in Edit Pop Up
+            //$('#editPatientModal').on('show.bs.modal', function (e) {
+
+            //    //$('#fullname').val(result.data.FirstName+ ' '+result.data.LastName);
+
+            //    //$('#lname').val(result.data.LastName);
+            //    //$('#oname').val(result.data.OtherName);
+            //    //$('#gender').val(result.data.Gender);
+            //    //$('#dob').val(result.data.DOB);
+
+            //    //$('#natid').val(result.data.NationalID);
+            //    //$('#job').val(result.data.Occupation);
+            //    //$('#edu').val(result.data.AcademicLevel);
+
+            //    //$('#res').val(result.data.HomeAddress);
+            //    //$('#pos').val(result.data.PostalAddress);
+            //    //$('#mobile').val(result.data.Mobile);
+            //    //$('#other').val(result.data.Telephone);
+            //    //$('#edu').val(result.data.AcademicLevel);
+            //    //$('#kin').val(result.data.EmergencyContact);
+            //    //$('#kin_num').val(result.data.EmergencyContactNumber);
+            //})
+
+
+            $('#patSearch').on( 'click', '.btnEdit', function () {
+                debugger;
+                var selectedRow = this.closest('tr');//Get closest row id
+                patientIdGlobal = patientTable.row( selectedRow).id();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Front/LoadPatient/"+patientIdGlobal,
+                    success: function (result) {
+
+                        debugger;
+
+                        $('#profile').html(result);
+                        $('#profile-tab').tab('show')
+
+                        //bind Save and Cancle buttons
+                        //--> Patient
+                        $('#registerPatient').on('click', function(){
+                            debugger;
+                            var imgData=$('#patImg').attr('src');
+
+
+                            var patient={
+                                PatientId:  $('#pID').val(),
+                                Title:$('#title').val(),
+                                FirstName :$('#fname').val(),
+                                LastName :$('#lname').val(),
+                                OtherName:$('#oname').val(),
+                                Gender :$("input[name='gender']:checked").val(),
+                                DOB : $('#dob').val(),
+
+                                NationalID :$('#natid').val(),
+                                Occupation :$('#job').val(),
+                                AcademicLevel :$('#edu').val(),
+
+                                HomeAddress :$('#res').val(),
+                                PostalAddress :$('#pos').val(),
+                                Mobile :$('#mobile').val(),
+                                Telephone :$('#other').val(),
+                                AcademicLevel:$('#edu').val(),
+                                EmergencyContact :$('#kin').val(),
+                                EmergencyContactNumber:$('#kin_num').val(),
+                                Mode:$('#mode').val(),
+                                Path:$('#fleImage').val(),
+                                ImageData:btoa(imgData)
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Front/AddPatient",
+                                data: patient,
+                                success: function (data) {
+                                    $('#addPatientModal').modal('hide');
+                                    window.location.reload();
+                                },
+
+                            })
+                        });
+                        $('#clearPatient').on('click', function(){
+                            // clear form
+                            document.getElementById("register").reset();
+                            // switch back to search tab
+                            $('#home-tab').tab('show')
+                        });
+                        //--> Patient
+
+                        //bind Save and Cancle buttons
+                        //--> Vitals
+                        $('#Height').blur(function(){
+                            var height=$('#Height').val();
+                            var weight = $('#weight').val();
+                            var resultBMI = parseFloat(weight) / (parseFloat(height)*parseFloat(height));
+
+                            $('#bmi').val(resultBMI.toFixed(2));
+                        })
+                        $('#weight').blur(function(){
+                            var height=$('#Height').val();
+                            var weight = $('#weight').val();
+                            var resultBMI = parseFloat(weight) / (parseFloat(height)*parseFloat(height));
+
+                            $('#bmi').val(resultBMI.toFixed(2));
+                        })
+
+                        $('#registerVitals').on('click', function(){
+                            debugger;
+                            var imgData=$('#patImg').attr('src');
+                            var patient={
+                                PatientId:  $('#pID').val(),
+                                MedicalId:  $('#mID').val(),
+                                Weight:$('#weight').val(),
+                                Height :$('#Height').val(),
+                                Pulse :$('#Pulse').val(),
+                                BMI:$('#bmi').val(),
+                                Temperature :$('#temp').val(),
+                                BloodPressure :$('#bpi').val(),
+
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Front/UpdateVitals",
+                                data: patient,
+                                success: function (data) {
+                                    $('#addPatientModal').modal('hide');
+                                    window.location.reload();
+                                },
+
+                            })
+                        });
+
+
+                    },
+                    error: function ( error) {
+                        debugger;
+                        alert(error);
+                    }
+                });
+
+            });
+            $("#patSearch").on('click','.btnSel',function(){
+                // get the current row
+
+                debugger;
+                var currentRow=$(this).closest("tr");
+
+                var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+                var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+                var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+
+                hosNumber=col1;
+                name=col2;
+                //Bind Ids for Vitals and Appointments
+                var rowid = patientTable.row( currentRow).id();
+                $("#pID").val(rowid);
+                $("#pat_id").val(rowid);
+            });
+            //$("#patSearch").on('click','.btnEdit',function(){
+            //    // get the current row
+
+            //    debugger;
+            //    var currentRow=$(this).closest("tr");
+
+            //    var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+            //    var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+            //    var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+
+            //    hosNumber=col1;
+            //    name=col2;
+            //    //$('#pID').val(col1);
+            //    //$.ajax({
+            //    //    type: "POST",
+            //    //    dataType: "json",
+            //    //    url: "/Front/LoadPatient/"+col1,
+            //    //    success: function (result) {
+            //    //        // alert('Successfully Deleted');
+            //    //        $('#editPatientModal').modal('show');
+
+
+
+            //    //        //$('#pID').val('');
+            //    //    },
+            //    //    error: function (xhr, status, error) {
+            //    //        alert(status);
+            //    //    }
+            //    //});
+
+            //});
+
+            $("#patSearch").on('click','.btnDel',function(){
+                debugger;
+                // get the current row
+                var currentRow=$(this).closest("tr");
+
+                var rowid = patientTable.row(currentRow).id();
+
+
+                var r = confirm("Do you want to delete this record?");
+                if (r == true) {
+
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Front/DeletePatient/"+rowid,
+                        success: function (result) {
+                            alert('Successfully Deleted');
+                            window.location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert(status);
+                        }
+                    });
+                    //deletePatient();
+                }
+            });
+
+            //Load  Patient Details in Vitals Pop Up
+            $('#cardModal').on('show.bs.modal', function (e) {
+                debugger;
+                $("#fullnametxt").text(name);
+                $("#hosnumbertxt").text(hosNumber);
+            })
+
+            //Load  Patient Details in Vitals Pop Up
+            $('#vitalsModal').on('show.bs.modal', function (e) {
+                $("#pat").val(name);
+                //$("#pID").val(patientId);
+            })
+
+            //$('#editPatientModal').on('show.bs.modal', function (e) {
+            //    $("#lname").val(name);
+            //    //$("#pID").val(patientId);
+            //})
+
+            //Load  Patient Details in Apointments Pop Up
+            $('#appointmentModal').on('show.bs.modal', function (e) {
+                $("#pat_name").val(name);
+                $("#pat_reg").val(hosNumber);
+                getToday();//SET DATE HERE
+            })
+
+            $('#Height').blur(function(){
+                var height=$('#Height').val();
+                var weight = $('#weight').val();
+                var resultBMI = parseFloat(weight) / (parseFloat(height)*parseFloat(height));
+
+                $('#bmi').val(resultBMI.toFixed(2));
+            })
+
+            $('#weight').blur(function(){
+                var height=$('#Height').val();
+                var weight = $('#weight').val();
+                var resultBMI = parseFloat(weight) / (parseFloat(height)*parseFloat(height));
+
+                $('#bmi').val(resultBMI.toFixed(2));
+            })
+
+            function getToday()
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+
+                if(dd<10) {
+                    dd = '0'+dd
+                }
+
+                if(mm<10) {
+                    mm = '0'+mm
+                }
+
+                today = mm + '/' + dd + '/' + yyyy;
+
+                $("#dp1").val(today);
+            }
+
+
+
+            $("#fleImage").change(function() {
+                readURL(this);
+            })
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#patImg').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+
+        });
+        $('#register').on('submit',function(e){
+            e.preventDefault();
+        });
+        function savePatient() {
+            debugger;
+            var imgData=$('#patImg').attr('src');
+
+            var patient={
+                PatientId:  $('#pID').val(),
+                Title:$('#title').val(),
+                FirstName :$('#fname').val(),
+                LastName :$('#lname').val(),
+                OtherName:$('#oname').val(),
+                Gender :$("input[name='gender']:checked").val(),
+                DOB : $('#dob').val(),
+
+                NationalID :$('#natid').val(),
+                Occupation :$('#job').val(),
+                AcademicLevel :$('#edu').val(),
+
+                HomeAddress :$('#res').val(),
+                PostalAddress :$('#pos').val(),
+                Mobile :$('#mobile').val(),
+                Telephone :$('#other').val(),
+                AcademicLevel:$('#edu').val(),
+                EmergencyContact :$('#kin').val(),
+                EmergencyContactNumber:$('#kin_num').val(),
+                Mode:$('#mode').val(),
+                Path:$('#fleImage').val(),
+                ImageData:btoa(imgData)
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Front/AddPatient",
+                data: patient,
+                success: function (data) {
+                    $('#addPatientModal').modal('hide');
+                    window.location.reload();
+                },
+
+            })
+        }
+        function doConfirm()
+        {
+            var r = confirm("Do you want to delete this record?");
+            if (r == true) {
+                //deletePatient();
+            }
+        }
+
+        function deletePatient()
+        {  debugger;
+            var patient=6;
+            $.ajax({
+                type: "POST",
+                url: "/Front/DeletePatient",
+                data:patient,
+                success: function (data) {
+                    alert('deleted');
+
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            })
+        }
+
+        function loadEditPatient()
+        {  debugger;
+            var patient=6;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/Front/LoadPatient",
+                data:patient,
+                success: function (data) {
+                    debugger;
+                    $('#editPatientModal').modal('show');
+                    // $('#patImg').attr('src','data:image/jpeg;base64,'+data.ImageName)
+
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            })
+        }
+        function doPDF()
+        {
+            debugger;
+            var doc = new jsPDF('p', 'mm', 'a4')
+
+            var specialElementHandlers = {
+                '#content': function(element, renderer) {
+                    return true;
+                }
+            };
+
+            // All units are in the set measurement for the document
+            // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+            doc.fromHTML($('#content').get(0), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+
+            doc.text("Card", 15, 10)
+            doc.save('card.pdf')
+        }
+
+
+        $("#assignSave").on("click",function(e)
+        {
+
+            debugger;
+            var doc=$('#doc_id').val();
+            if (doc==0)
+            {
+                alert("Please select a doctor");
+                e.preventDefault();
+            }
+            else
+                confirm ('Are you sure want to book this appointment?');
+        });
+
+
+    </script>
+
+
+}
