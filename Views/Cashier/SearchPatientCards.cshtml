@@ -1,0 +1,255 @@
+﻿
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="span12">
+                <table style="width:100%" id="patSearch" class="table">
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th>Hospital #</th>
+                            <th>Patient Full Name</th>
+                            <th>Age</th>
+                            <th>Date Of Birth</th>
+                            <th>Mobile</th>
+                            <th>Occupation</th>
+                            <th width="10%">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="receiptModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Patient Bill</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="content">
+                <button id="cmd" onclick="doPDF();">PRINT</button><input type="hidden" id="pat_id" name="pat_id" value="0" />
+                <div class="row">
+                    <label type="text" id="fullnameLabel" name="fullname">Full Name : </label>
+                    <label id="fullname" name="fullname"></label>
+                </div>
+                <div class="row">
+                    <label type="text" id="patientNumberLabel" name="patientNumberLabel">Hospital # : </label>
+                    <label id="patientNumber" name="patientNumber"></label>
+                </div>
+                <table id="receiptTable">
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th>Description</th>
+                            <th>Charge</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            //Get Doctor Information for AssignDoctor PopUp
+            var userData = @Html.Raw(ViewBag.UserList);
+            var chargesData = @Html.Raw(ViewBag.ChargeList);
+
+
+
+            //Bind to Select Doctor
+            $('#doc_id').append('<option value="0">-----Select Doctor-----</option>');
+            for (var i = 0; i < userData.length; i++) {
+
+                $('#doc_id').append('<option value='+userData[i].UserId+'>' + userData[i].FirstName +'-'+ userData[i].Practice+ '</option>');
+            }
+
+            var patientData = @Html.Raw(ViewBag.ChargeList);
+          $('#patSearch').DataTable( {
+                data: patientData,
+                rowId: 'PatientId',
+                dom: 'Bfrtip',
+                columns: [
+                    {
+                        data: "PatientId",
+                        visible:false
+                    },
+                    { data: "PatientNumber" },
+                    { data: "FirstName" },
+                    { data: "Gender" },
+                    { data: "DOB" },
+                    { data: "Mobile" },
+                    { data: "Occupation" },
+                    {
+                        width:200,
+                        data: null,
+                        defaultContent: "<button class='btn btn-primary btnSel' id='btnReceipt'>Card</button>"
+                    }
+                ],
+
+            } );
+
+          $('#receiptTable').DataTable( {
+              data: [],
+
+              bFilter: false,
+              bInfo: false,
+              bPaginate: false,
+              columns: [
+                  {
+                      data: "BillId",
+                      visible:false
+                  },
+                  { data: "Description" },
+                  { data: "Charge" },
+              ],
+
+          } );
+
+
+
+
+            var name="";
+            var hosNumber="";
+            var patTable = $('#patSearch').DataTable();
+            $('#patSearch').on( 'click', 'tr', function () {
+                // get the current row
+                var currentRow=$(this).closest("tr");
+
+                var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+                var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+                var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+                hosNumber=col1;
+                name=col2;
+                debugger;
+                var rowid = patTable.row( this).id();
+                window.open('http://localhost:7227/CardReport.aspx?id='+rowid,'_blank');
+                //$.ajax({
+                //    type: "POST",
+                //    dataType: "json",
+                //    url: "/Cashier/PatientCharges/"+rowid,
+                //    success: function (result) {
+                //        $("#receiptModal").modal('show');
+
+
+                //        $('#fullname').text(result.data.FirstName+ ' '+result.data.LastName);
+                //        $('#patientNumber').text(result.data.PatientNumber);
+
+                //        //Recreate and rebind receipt table every time you hit the receipt button
+                //        $('#receiptTable').DataTable().clear().rows.add(result.data1).draw();
+
+                //    },
+                //    error: function (xhr, status, error) {
+                //        alert(status);
+                //    }
+                //});
+
+            });
+
+            //Load  Patient Details in Vitals Pop Up
+            $('#vitalsModal').on('show.bs.modal', function (e) {
+                $("#pat").val(name);
+            })
+
+            //Load  Patient Details in Apointments Pop Up
+            $('#appointmentModal').on('show.bs.modal', function (e) {
+                $("#pat_name").val(name);
+                $("#pat_reg").val(hosNumber);
+                $("#dp1").val(hosNumber);
+            })
+
+            $('#Height').blur(function(){
+
+                debugger;
+                var height=$('#Height').val();
+                var weight = $('#weight').val();
+                var resultBMI = parseFloat(weight) / (parseFloat(height)*parseFloat(height));
+
+                $('#bmi').val(resultBMI.toFixed(2));
+            })
+            //function loadDate()
+            //{
+            //    debugger;
+            //    var today = new Date();
+            //    var dd = today.getDate();
+            //    var mm = today.getMonth()+1; //January is 0!
+            //    var yyyy = today.getFullYear();
+
+            //    if(dd<10) {
+            //        dd = '0'+dd
+            //    }
+
+            //    if(mm<10) {
+            //        mm = '0'+mm
+            //    }
+
+            //    today = mm + '/' + dd + '/' + yyyy;
+            //}
+
+
+        });
+
+        function loadReceipt()
+        {
+            $('#fullname').text('Jeffrey Oti');
+            $('#patientNumber').text('ACH-0111222');
+        }
+        function doPDF()
+        {
+            var doc = new jsPDF('p', 'mm', 'a4')
+
+            var specialElementHandlers = {
+                '#content': function(element, renderer) {
+                    return true;
+                }
+            };
+
+            // All units are in the set measurement for the document
+            // This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+            doc.fromHTML($('#content').get(0), 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+
+            doc.text("Receipt", 15, 10)
+            doc.save('receipt.pdf')
+        }
+
+    </script>
+
+
+}
+
+
+

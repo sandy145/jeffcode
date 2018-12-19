@@ -1,0 +1,421 @@
+﻿
+@{
+    //Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Diagnosis";
+}
+
+<div class="container-fluid">
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-personal-tab" data-toggle="pill" href="#pills-personal" role="tab" aria-controls="pills-personal" aria-selected="true">Patient Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Complain History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-history-tab" data-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="false">Further Assessment</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-assess-tab" data-toggle="pill" href="#pills-assess" role="tab" aria-controls="pills-assess" aria-selected="false">History and Examination</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-diagnosis-tab" data-toggle="pill" href="#pills-diagnosis" role="tab" aria-controls="pills-diagnosis" aria-selected="false">Diagnoses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-prescribe-tab" data-toggle="pill" href="#pills-prescribe" role="tab" aria-controls="pills-prescribe" aria-selected="false">Prescriptions</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-personal" role="tabpanel" aria-labelledby="pills-personal-tab">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="hidden" id="patient" value="" /><input type="hidden" id="presSelections" value="" /><input type="hidden" id="labSelections" value="" />
+                    <input type="hidden" id="scanSelections" value="" /><input type="hidden" id="xRaySelections" value="" />
+                    <label type="text" id="fullnameLabel" name="fullname" class="text-info">Full Name</label>
+                </div>
+                <div class="col-sm-4">
+                    <label type="text" id="fullnameLabel" name="fullname" class="text-info">Gender</label>
+                </div>
+                <div class="col-sm-4">
+                    <label type="text" id="fullnameLabel" name="fullname" class="text-info">Date Of Birth</label>
+                </div>
+                @*<div  class="col-sm-3">
+                        <img id="patImg" style="width: 150px; height: 200px;"/>
+                    </div>*@
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label id="fullname" name="fullname"></label>
+                </div>
+                <div class="col-sm-4">
+                    <label id="gender" name="gender"></label>
+                </div>
+                <div class="col-sm-4">
+                    <label id="dob" name="dob"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label type="text" id="levelLabel" name="level" class="text-info">Academic Level</label>
+                </div>
+                <div class="col-sm-4">
+                    <label type="text" id="occupationLabel" name="occupation" class="text-info">Occupation</label>
+                </div>
+                <div class="col-sm-4">
+                    <label type="text" id="nationalidLabel" name="nationalid" class="text-info">National ID</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label id="level" name="level"></label>
+                </div>
+                <div class="col-sm-4">
+                    <label id="occupation" name="occupation"></label>
+                </div>
+                <div class="col-sm-4">
+                    <label id="nationalid" name="nationalid"></label>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div style="overflow:scroll">
+                <table id="complainList" width="100%" align="center" cellpadding="3" cellspacing="2" class="display">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Chief Complains</th>
+                            <th>Examination </th>
+                            <th>Diagnosis</th>
+                            <th>Temperature </th>
+                            <th>Weight</th>
+                            <th>Height</th>
+                            <th>BP.</th>
+                            <th>Pulse</th>
+                            <th>BMI.</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
+
+            <div class="row">
+                <div class="col">
+                    <h5>Please select Lab Tests</h5><button class="btn btn-danger" id="screening" value="Screening" name="screening" onclick="doScreening();">Screening</button>
+                    <br />
+                    <div style="width: 100%; overflow:auto; border: 1px solid #c5c5c5">
+                        <table id="labList" style="width:100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Lab Test</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                    <br />
+                    <button class="btn btn-danger" id="screening" value="Screening" name="screening" onclick="doScreening();">Screening</button>
+                    <br />
+                    @*<div class="row">
+                            <div class="col-2">Other</div><div class="col-6"><input type="text" class="form-control" id="otherLab"/></div>
+                        </div>*@
+                    @*<button id="btnDownload" class='btn btn-primary' data-toggle='modal' data-target='#downloadModal'>DownLoad</button>*@
+                </div>
+                @*<div class="col">
+                        <h3>Please select Scans</h3>
+                        <div style="width: 300px; height:300px; overflow: auto; border: 1px solid #c5c5c5">
+                            <table id="scanList" style="width:100%" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Scan</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>*@
+                <br />
+                @*<div class="row">
+                        <div class="col-2">Other</div><div class="col-6"><input type="text" class="form-control" id="otherScan" /></div>
+                    </div>*@
+                @*<div class="col">
+                        <h3>Please select X-Rays</h3>
+                        <div style="width: 300px; height:300px; overflow: auto; border: 1px solid #c5c5c5">
+                            <table id="xRayList" style="width:100%" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>X-Ray</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br />*@
+                @*<div class="row">
+                        <div class="col-2">Other</div><div class="col-6"><input type="text" class="form-control" id="otherXRay" /></div>
+                    </div>*@
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-assess" role="tabpanel" aria-labelledby="pills-assess-tab">
+            <div class="col-lg-12">
+                <div class="card mt-2">
+                    <h5 class="card-header">History & Examination</h5>
+                    <div class="card-body">
+                        <div style="width: 100%; overflow:auto; border: 1px solid #c5c5c5">
+                            <table id="examinationList" style="width:100%" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Examination</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                        @*<div class="col">
+                            <h5>Examination</h5>
+                            <textarea name="txtExamination" id="txtExamination" cols="45" rows="5" style="width:400px " required></textarea>
+                        </div>*@
+                        
+                        @*<div class="col">
+                                <h5>Diagnosis</h5>
+                                <textarea name="txtDiagnosis" id="txtDiagnosis" cols=45" rows="5" style="width:400px " required></textarea>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-diagnosis" role="tabpanel" aria-labelledby="pills-diagnosis-tab">
+            <div class="col-lg-12">
+                <div class="card mt-2">
+                    <h5 class="card-header">Diagnoses</h5>
+                    <div class="card-body">
+                        <div style="width: 100%; overflow:auto; border: 1px solid #c5c5c5">
+                            <table id="diagnosisList" style="width:100%" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Diagnoses</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-prescribe" role="tabpanel" aria-labelledby="pills-prescribe-tab">
+            <div class="col-lg-12">
+                <div class="card mt-2">
+                    <h5 class="card-header">Prescriptions</h5>
+                    <div class="card-body">
+                        <table id="drugList" style="width:100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Drug Name</th>
+                                    <th>Category</th>
+                                    <th>Volume</th>
+                                    <th>Dosage</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col">
+                                <label id="noDrugsCheckLabel" name="noDrugsCheckLabel" class="text-info">No Drugs Required</label>
+                                <input type="checkbox" id="noDrugsCheck" />
+                            </div>
+
+                        </div>
+                        <div>
+                            <button class="btn btn-success" type="button" id="submit" value="Submit" name="submit" onclick="saveDiagnosis();">Prescribe Drugs</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="downloadModal" role="dialog">
+        <div class="modal-dialog  modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Download</h4>
+                </div>
+                @Html.Partial("~/Views/Doctor/Download.cshtml")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="patientHistory" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Patient History</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="width:100%; border:solid black 1px;">
+                        <thead>
+                            <tr>
+                                <td>Complain</td>
+                                <td>Examination</td>
+                                <td>Diagnosis</td>
+                                <td>Temperature</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            debugger;
+            var drugData = @Html.Raw(ViewBag.DrugList);
+            var labData = @Html.Raw(ViewBag.LabList);
+            var selectedPrescriptionValues=[];
+            var personalInfoData = @Html.Raw(ViewBag.PersonalData);
+            $('#fullname').text(personalInfoData.FirstName+ ' '+personalInfoData.LastName);
+            $('#gender').text(personalInfoData.Gender);
+            $('#dob').text(personalInfoData.DOB);
+            $('#level').text(personalInfoData.AcademicLevel);
+            $('#occupation').text(personalInfoData.Occupation);
+            $('#nationalid').text(personalInfoData.NationalID);
+
+            var complainData = @Html.Raw(ViewBag.ComplainsList);
+
+
+            //$('#drugList').DataTable( {
+            //    data: drugData,
+            //    columns: [
+            //        {
+            //            width:30,
+            //            data: null,
+            //            defaultContent: " <input type='checkbox' value='' />"
+            //        },
+            //         {
+            //             data: "DrugId",
+            //             visble:false,
+            //         },
+            //        { data: "DrugName" },
+            //        { data: "Category" },
+            //        { data: "Volume" }
+            //    ]
+            //});
+            $('#labList').DataTable( {
+                data: labData,
+                paging:   false,
+                ordering: false,
+                info:     false,
+                columns: [
+                    {
+                        width:30,
+                        data: null,
+                        defaultContent: " <input type='checkbox' value='' />"
+                    },
+                    { data: "LabTest" },
+                ]
+            });
+            $('#scanList').DataTable( {
+                data: labData,
+                paging:   false,
+                ordering: false,
+                info:     false,
+                columns: [
+                    {
+                        width:30,
+                        data: null,
+                        defaultContent: " <input type='checkbox' value='' />"
+                    },
+                    { data: "LabTest" },
+                ]
+            });
+            $('#xRayList').DataTable( {
+                data: labData,
+                paging:   false,
+                ordering: false,
+                info:     false,
+                columns: [
+                    {
+                        width:30,
+                        data: null,
+                        defaultContent: " <input type='checkbox' value='' />"
+                    },
+                    { data: "LabTest" },
+                ]
+            });
+
+
+            var table = $('#drugList').DataTable();
+            $('#drugList').on( 'click', 'tr', function () {
+                var id = table.row( this ).id();
+
+                alert( 'Clicked row id '+id );
+            } );
+
+
+
+        });
+
+        $(document).ready(function() {
+            $("#btnDownload").click(function () {
+                debugger;
+                var file = $("#FilePath").val();
+                $.ajax({
+                    url: '@Url.Action("Download", "Doctor")',
+                    data: { filePath: file, mode:'action' },
+                    method: 'GET',
+                    dataType: 'json',
+                    //contentType: 'application/json; charset=utf-8',
+
+                    success: function(data) {
+                        @*window.location = '@Url.RouteUrl("DownloadCampaign", "FileList", new { filePath = data1.fileName })';*@
+                        window.location.href = "@Url.RouteUrl(new
+                    { Controller = "Doctor", Action = "DownloadCampaign" })/?filePath=" + data.fileName + "&mode=download";
+                        $("#downloadFile_dialog").dialog("close");
+                    },
+                    error: function (req, status, errorObj) {
+                        alert("Error");
+                    }
+                });
+
+            });
+        });
+
+    </script>
+
+}

@@ -1,0 +1,112 @@
+﻿
+
+<form action="AddPatient" method="post" enctype="multipart/form-data" id="register" name="register" class="form-horizontal">
+    <div class="row">
+
+
+        <table width="90%" align="center" cellpadding="3" cellspacing="2">
+            <tr>
+                <td>Title</td>
+                <td><input type="hidden" id="pID" name="pID" />
+                    <select name="title" id="title" class="required form-control">
+                        <option value="">--PLEASE SELECT TITLE--</option>
+                        <option value="MR">MR</option>
+                        <option value="MRS">MRS</option>
+                        <option value="MS">MS</option>
+                        <option value="MASTER">MASTER</option>
+                        <option value="DR">DR</option>
+                        <option value="PROF">PROF</option>
+                    </select>
+                </td>
+                <td>Gender</td>
+                <td>
+                    <div>
+                        <label class="radio">
+                            Male<input type="radio" class='form-control' name="gender" id="gender" value="male" />
+                        </label>
+                        <label class="radio">
+                            Female<input type="radio" class='form-control' name="gender" id="gender" value="female" />
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" class='form-control' name="fname" id="fname" required /><label id="abc" name="abc"></label></td>
+                <td>Last Name</td>
+                <td><input type="text" class='form-control' name="lname" id="lname" required /></td>
+            </tr>
+            <tr>
+                <td>Other Names</td>
+                <td><input type="text" class='form-control' name="oname" id="oname" /></td>
+                <td>Date Of Birth</td>
+                <td>
+                    <input type="text" id="dob" class='form-control datepicker' name="dob" required data-date-format="mm/dd/yyyy" data-provide="datepicker">
+                </td>
+            </tr>
+            <tr>
+                <td>Residential Address</td>
+                <td><textarea name="res" class='form-control' id="res" cols="45" rows="2" required></textarea></td>
+                <td>Postal Address</td>
+                <td><textarea name="pos" class='form-control' id="pos" cols="45" rows="2"></textarea></td>
+            </tr>
+            <tr>
+                <td>Mobile Number</td>
+                <td><input type="text" class='form-control numeric' name="mobile" id="mobile" required /></td>
+                <td>Other Number</td>
+                <td><input type="text" class='form-control numeric' name="other" id="other" /></td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td><input type="text" class='form-control' name="job" id="job" /></td>
+                <td>Academic Level</td>
+                <td><input type="text" class='form-control' name="edu" id="edu" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Emergency Contact Person</td>
+                <td><input type="text" class='form-control' name="kin" id="kin" required /></td>
+                <td>Emergency Contact  Number</td>
+                <td><input type="text" class='form-control' name="kin_num" id="kin_num" required /></td>
+            </tr>
+            <tr>
+                <td>National ID</td>
+                <td><input type="text" class='form-control' name="natid" id="natid" /></td>
+                <td>Upload Passport Picture</td>
+                <td><input type="file" class='form-control' name="fleImage" id="fleImage" /></td>
+            </tr>
+            <tr>
+                <td>Payment Mode</td>
+                <td>
+                    <select name="mode" id="mode" class="required form-control">
+                        <option value="">-- SELECT MODE--</option>
+                        <option value="1">CASH</option>
+                        <option value="2">NHIS</option>
+                        <option value="3">OTHER</option>
+                    </select>
+                </td>
+                <td></td>
+                <td><img id="patImg" style="width: 150px; height: 200px;"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2" align="center">&nbsp;</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    @*<input type="submit" id="btnSave" value="Save" />*@
+                    <button class="btn btn-primary fa-save" name="registerPatient" id="registerPatient" onclick="savePatient();">Save</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+
+

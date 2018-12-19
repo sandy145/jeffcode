@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Assign Doctor";
+}
+
+<div class="container">
+    <div class="row">
+
+        <form action="AssignDoctor" method="post" id="today" class="form-horizontal" name="today" style="width:100%">
+            <input type="hidden" id="pat_id" name="pat_id" value="0" />
+            <div class="control-group">
+                <label class="control-label">Patient Name</label>
+                <div class="controls">
+                    <div class="input">
+                        <input type="text" class="input form-control" id="pat_name" name="pat_name" value="" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Hospital Number</label>
+                <div class="controls">
+                    <div class="input">
+                        <input type="text" class="input form-control" id="pat_reg" name="pat_reg" value="" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputComment">Today's Date</label>
+                <div class="controls">
+                    <div class="input">
+                        <input type="text" class="form-control" id="dp1" name="dob" value="" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Review</label>
+
+                <div>
+                    <input type="checkbox" id="reviewChk" name="reviewChk" />
+                </div>
+
+            </div>
+            <div class="control-group">
+                <label class="control-label">Select Doctor</label>
+                <div class="controls">
+                    <div class="input">
+                        <select id="doc_id" class="required form-control" name="doc_id" required></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" class="btn btn-success" value="Save" name="submit" id="assignSave"/>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            var userData = @Html.Raw(ViewBag.UserList);
+
+        });
+    </script>
+
+
+}
